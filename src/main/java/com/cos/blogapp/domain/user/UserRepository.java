@@ -17,10 +17,10 @@ import org.springframework.data.jpa.repository.Query;
 //@Repository 내부적으로 (부모 클래스에) 걸려있어서 안써줘도됨
 public interface UserRepository extends JpaRepository<User, Integer>{
 	
-	@Query(value = "insert into user (username, password, email) values (:username, :password, :email)", nativeQuery = true)
+	@Query(value = "INSERT INTO user (username, password, email) values (:username, :password, :email)", nativeQuery = true)
 	void join(String username, String password, String email);
 	
-	@Query(value = "select * from user where username = :username and password = :password", nativeQuery = true)
+	@Query(value = "SELECT * FROM user WHERE username = :username and password = :password", nativeQuery = true)
 	User mLogin(String username, String password);
 
 }

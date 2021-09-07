@@ -11,11 +11,11 @@
 		<!-- 폼은 한번에 많은 데이터를 전송하기 위해 사용한다.  -->
 		<!-- 메서드를 포스트로 보내주고 폼태그는 풋딜리트를 들고있지 않다. -->
 		<div class="form-group">
-			<input type="text"  name= "username" class="form-control" placeholder="Enter username">
+			<input type="text"  name= "username" class="form-control" placeholder="Enter username"  required="required">
 		</div>
 		<!-- 클래스는 css를 연결하는 디자인 -->
 		<div class="form-group">
-			<input type="password" name= "password" class="form-control" placeholder="Enter password">
+			<input type="password" name= "password" class="form-control" placeholder="Enter password"  required="required">
 		</div>
 		<button type="submit" class="btn btn-primary">로그인</button>
 	</form>

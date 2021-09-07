@@ -11,35 +11,18 @@ import com.cos.blogapp.domain.user.UserRepository;
 import com.cos.blogapp.web.dto.JoinReqDto;
 import com.cos.blogapp.web.dto.LoginReqDto;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 
-	private UserRepository userRepository;
-	private HttpSession session;
+	private final UserRepository userRepository;
+	private final HttpSession session;
 	
-	// DI
-	public UserController(UserRepository userRepository, HttpSession session) {
-		this.userRepository = userRepository;
-		 this.session = session;
-	}
+
 	
-	@GetMapping("/test/query/join")
-	public void testQueryJoin() {
-		userRepository.join("cos", "1234", "cos@nate.com");
-	}
-	
-	@GetMapping("/test/join")
-	public void testJoin() {
-		User user = new User();
-		user.setUsername("ssar");
-		user.setPassword("1234");
-		user.setEmail("ssar@nate.com");
-		
-		// insert into user(username, password, email) values('ssar', '1234', 'ssar@nate.com');
-		userRepository.save(user);
-	}
-	
-	@GetMapping("/home")
+	@GetMapping({"/","/home"})
 	public String home() {
 		return "home";
 	}
@@ -50,18 +33,24 @@ public class UserController {
 	//  /WEB-INF/views/user/login.jsp
 	@GetMapping("/loginForm")
 	public String loginForm() {
-		return "user/loginForm";
+		return "user/loginForm";  //ViewResolver
 	}
 	
 	@GetMapping("/joinForm")
 	public String joinForm() {
-		return "user/joinForm";
+		return "user/joinForm";	//ViewResolver
 	}
 	
 	@PostMapping("/login")
 	public String login(LoginReqDto dto) {
 		
-		
+		if(dto.getUsername() == null ||
+				 dto.getPassword() == null ||
+				 !dto.getUsername().equals("")||
+				 !dto.getPassword().equals("")
+				 ) {
+				return "error/error";
+			}
 	
 
 		// 1. username, password 받기
@@ -79,9 +68,10 @@ public class UserController {
 					return"redirect:/home";
 					
 				}
-				
-				
 		}
+		
+
+		
 		// 3-1 (DB에 데이터가 있으면) session에 저장(나중에 다시 불러올때 아예 
 		//새로 불러와야하는데 세션에 두면 쉽게 불러온다.)
 		// 3-2 (DB에 데이터가 없으면)
@@ -98,22 +88,34 @@ public class UserController {
 		
 		/* User user = new User(); */
 		
-	 // user.setUsername(dto.getUsername());
-	 // user.setPassword(dto.getPassword());
-	 // user.setEmail(dto.getEmail());
 		/*
 		 * user.setUsername(dto.getUsername()); 
 		 * user.setPassword(dto.getPassword());
 		 * user.setEmail(dto.getEmail());
+		 * 
+		 * userRepository.save(user);
+		 * 
+		 * return "redirect:/loginform";
 		 */
+		
+		if(dto.getUsername() == null ||
+			 dto.getPassword() == null ||
+			 dto.getEmail()		  == null ||
+			 !dto.getUsername().equals("")||
+			 !dto.getPassword().equals("")||
+			 !dto.getEmail().equals("")
+			 ) {
+			return "error/error";
+		}
+		
 		
 		
 		
 		userRepository.save(dto.toEntity());
 		
-		return "redirect:/loginform";  //리다이렉션(300)
+		return "redirect:/loginForm";  //리다이렉션(300) 
 	}
 
-	
+	//response.send redirection  사용자가 A페이지 요청했는데 B페이지 보여주는것
 }
 
