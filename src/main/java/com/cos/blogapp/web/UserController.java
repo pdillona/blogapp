@@ -12,9 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.blogapp.domain.user.User;
 import com.cos.blogapp.domain.user.UserRepository;
+import com.cos.blogapp.util.Script;
 import com.cos.blogapp.web.dto.JoinReqDto;
 import com.cos.blogapp.web.dto.LoginReqDto;
 
@@ -49,7 +51,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@Valid LoginReqDto dto, BindingResult bindingResult, Model model) {
+	public @ResponseBody String login(@Valid LoginReqDto dto, BindingResult bindingResult, Model model) {
 		
 		//Valid는 내가 체크할 항목 앞에 놔야함
 
@@ -61,7 +63,7 @@ public class UserController {
 				System.out.println("메시지:"+error.getDefaultMessage());
 			}
 			model.addAttribute("errorMap", errorMap);
-			return "error/error";
+			return Script.back(errorMap.toString()); //제약? 조건에 위배되는 행위시에만 뜨는 엘럿
 		}
 
 		// 1. username, password 받기
@@ -69,14 +71,14 @@ public class UserController {
 		User userEntity =  userRepository.mLogin(dto.getUsername(), dto.getPassword());{
 			
 			
-				if(userEntity == null) {
+				if(userEntity == null) { // username, password 잘못기입
 					
-					return"redirect:/loginForm";
-					
+					return Script.back("아이디 혹은 비밀번호를 잘못 입력하셨습니다.");
+					 // 아이디 비밀번호 다적은다음 그둘중 하나가 틀렸을때 뜨는창 
 				}else {
 					
 					 session.setAttribute("principal",userEntity); 
-					return"redirect:/home";
+					return Script.href("/", "로그인성공");
 					
 				}
 		}
@@ -95,8 +97,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/join")
-	public String join(@Valid JoinReqDto dto, BindingResult bindingResult, Model model) { // username = love&password=1234&email=love@nate.com
-		
+	//public String join(@Valid JoinReqDto dto, BindingResult bindingResult, Model model) { // username = love&password=1234&email=love@nate.com
+		public @ResponseBody String join(@Valid JoinReqDto dto, BindingResult bindingResult, Model model) { // username=love&password=1234&email=love@nate.com	
 		/* User user = new User(); */
 		
 		/*
@@ -108,8 +110,10 @@ public class UserController {
 		 * 
 		 * return "redirect:/loginform";
 		 */
+		// 1. 유효성 검사 실패  - 자바스크립트 응답(경고창, 뒤로가기)
+		// 2. 정상 - 로그인 페이지
 		
-		System.out.println("에러사이즈:"+bindingResult.getFieldErrors().size()); 
+		//System.out.println("에러사이즈:"+bindingResult.getFieldErrors().size()); 
 		
 		
 		if(bindingResult.hasErrors()) {
@@ -120,14 +124,14 @@ public class UserController {
 				System.out.println("메시지:"+error.getDefaultMessage());
 			}
 			model.addAttribute("errorMap", errorMap);
-			return "error/error";
+			return Script.back(errorMap.toString());
 		}
 		
 		
 		
 		userRepository.save(dto.toEntity());
 		
-		return "redirect:/loginForm";  //리다이렉션(300) 
+		return Script.href("/loginForm");  //리다이렉션(300) 
 	}
 
 	//response.send redirection  사용자가 A페이지 요청했는데 B페이지 보여주는것

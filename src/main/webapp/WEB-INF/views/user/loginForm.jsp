@@ -15,7 +15,7 @@
 		</div>
 		<!-- 클래스는 css를 연결하는 디자인 -->
 		<div class="form-group">
-			<input type="password" name= "password" class="form-control" placeholder="Enter password"  required="required">
+			<input type="password" name= "password" class="form-control" placeholder="Enter password"  >
 		</div>
 		<button type="submit" class="btn btn-primary">로그인</button>
 	</form>
