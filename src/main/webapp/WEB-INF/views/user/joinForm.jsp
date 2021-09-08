@@ -8,10 +8,10 @@
 	<!-- 컨테이너는가운데 정렬되면서 전체의 80%를 차지한다. -->
 	<form action="/join"  method="post">
 		<div class="form-group">
-			<input type="text"  name= "username" class="form-control" placeholder="Enter username" required="required">
+			<input type="text"  name= "username" class="form-control" placeholder="Enter username" required="required"  maxlength="20">
 		</div>
 		<div class="form-group">
-			<input type="password" name= "password" class="form-control" placeholder="Enter password" required="required">
+			<input type="password" name= "password" class="form-control" placeholder="Enter password" required="required"  maxlength="20">
 		</div>
 		<div class="form-group">
 			<input type="email" name= "email" class="form-control" placeholder="Enter email" required="required">

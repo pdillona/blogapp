@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>워닝워닝워닝럼블궁푸왕아아아악`~~! 잘못된 접근입니다</h1>
+워닝워닝워닝럼블궁푸왕아아아악`~~! 잘못된 접근입니다
+${errorMap}
 </body>
 </html>

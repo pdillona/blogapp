@@ -1,8 +1,15 @@
 package com.cos.blogapp.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -42,16 +49,20 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(LoginReqDto dto) {
+	public String login(@Valid LoginReqDto dto, BindingResult bindingResult, Model model) {
 		
-		if(dto.getUsername() == null ||
-				 dto.getPassword() == null ||
-				 !dto.getUsername().equals("")||
-				 !dto.getPassword().equals("")
-				 ) {
-				return "error/error";
+		//Valid는 내가 체크할 항목 앞에 놔야함
+
+		if(bindingResult.hasErrors()) {
+			Map<String, String> errorMap = new HashMap<>();
+			for(FieldError error: bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+				System.out.println("필드:"+error.getField());
+				System.out.println("메시지:"+error.getDefaultMessage());
 			}
-	
+			model.addAttribute("errorMap", errorMap);
+			return "error/error";
+		}
 
 		// 1. username, password 받기
 		// 2. 받은 데이터 DB에서 조회하기
@@ -84,7 +95,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/join")
-	public String join(JoinReqDto dto) { // username = love&password=1234&email=love@nate.com
+	public String join(@Valid JoinReqDto dto, BindingResult bindingResult, Model model) { // username = love&password=1234&email=love@nate.com
 		
 		/* User user = new User(); */
 		
@@ -98,16 +109,19 @@ public class UserController {
 		 * return "redirect:/loginform";
 		 */
 		
-		if(dto.getUsername() == null ||
-			 dto.getPassword() == null ||
-			 dto.getEmail()		  == null ||
-			 !dto.getUsername().equals("")||
-			 !dto.getPassword().equals("")||
-			 !dto.getEmail().equals("")
-			 ) {
+		System.out.println("에러사이즈:"+bindingResult.getFieldErrors().size()); 
+		
+		
+		if(bindingResult.hasErrors()) {
+			Map<String, String> errorMap = new HashMap<>();
+			for(FieldError error: bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+				System.out.println("필드:"+error.getField());
+				System.out.println("메시지:"+error.getDefaultMessage());
+			}
+			model.addAttribute("errorMap", errorMap);
 			return "error/error";
 		}
-		
 		
 		
 		
