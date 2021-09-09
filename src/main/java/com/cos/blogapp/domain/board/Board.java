@@ -1,10 +1,12 @@
 package com.cos.blogapp.domain.board;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.cos.blogapp.domain.user.User;
@@ -24,10 +26,11 @@ public class Board {
 	
 	private int id; 					 
 	private String title; 
+	@Lob
 	private String content; 
 	
 	@JoinColumn(name="userId")
-	@ManyToOne
-	private User user;	//s
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User user;	
 	
 }
