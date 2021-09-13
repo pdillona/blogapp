@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +15,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 <body>
   <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
@@ -23,9 +27,8 @@
   -->
 
 
-
-<!-- 네브바 시작 -->
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	<!-- 네브바 시작 -->
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<a class="navbar-brand" href="/">블로그</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#collapsibleNavbar">
@@ -43,11 +46,11 @@
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="nav-item"><a class="nav-link" href="/board/saveForm">글쓰기</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/board/saveForm">글쓰기</a></li>
 
-						<li class="nav-item"><a class="nav-link" href="/user/${sessionScope.principal.id}">회원정보</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/user/${sessionScope.principal.id}">회원정보</a></li>
 
 						<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a>
 						</li>
@@ -57,4 +60,4 @@
 		</div>
 	</nav>
 	<br>
-<!-- 네브바 끝 -->
+	<!-- 네브바 끝 -->
