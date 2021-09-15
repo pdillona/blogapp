@@ -20,14 +20,15 @@ public class SHA {
 			
 			//2. 비밀번호 1234 ->SHA256 던지기 (byte로 던짐)
 			md.update(rawPassword.getBytes());
-		    
-		
-			StringBuilder sb =  new StringBuilder();
+	
+			
+			// 3. 암호화된 글자를 16진수로 변환(헥사코드)
+			StringBuilder sb = new StringBuilder();
 			for(Byte b : md.digest()) { //update ->md.digest
 				sb.append(String.format("%02x", b));
 			}
 			return sb.toString();
-
 		}
+
 }
 
