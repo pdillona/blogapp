@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,6 +30,16 @@ public class UserController {
 
 	private final UserRepository userRepository;
 	private final HttpSession session;
+	
+	@GetMapping("/user/{id}")
+	public String userInfo(@PathVariable int id) {
+	/*	정석은 userRepository.findById(id) 디비에서 가져와야하지만
+		편법으로는 세션값을 가져올 수도 있다. 단 세션을 사용하면 겟맵핑의 주소가 
+		저렇게 될 필요는 없지만 애초에 디비접근안해서 저걸 안쓸꺼니까 그래도 저렇게
+		정석으로 만들어 줘야함 왜냐하면 다른것들과 맞춰주기 위해서이다.*/
+		
+		return "user/updateForm";
+	}
 	
 	@GetMapping("/logout")
 	public String logout() {
